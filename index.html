@@ -15,7 +15,7 @@ body{font-family:system-ui,sans-serif;margin:0;background:var(--bg);color:#1a1a1
 .SCREEN{max-width:520px;margin:0 auto;min-height:100vh}
 .HIDDEN{display:none!important}
 #P0,#P-RESUME{background:radial-gradient(circle at 50% 30%,var(--red-d),var(--navy) 75%);color:#fff;text-align:center;padding:32px 20px 40px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#P0 img,#P-RESUME img{width:150px;margin-bottom:14px;filter:drop-shadow(0 0 14px rgba(255,255,255,.35))}
+.SEC-LOGO{width:200px;height:auto;margin-bottom:22px;filter:drop-shadow(0 0 15px rgba(255,255,255,.4))}
 #P0 h1,#P-RESUME h1{font-size:1.45em;margin:4px 0;text-transform:uppercase}
 #P0 .P0-UNIT,#P-RESUME .P0-UNIT{font-size:1.45em;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin:0 0 16px;line-height:1.25;max-width:320px}
 .APP-HDR{background:var(--red-d);color:#fff;padding:10px 14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
@@ -129,8 +129,8 @@ body.dark .BIB-META{color:#aaa}
 <body>
 
 <div id="P0" class="SCREEN">
+<img src="phonix.png" class="SEC-LOGO" alt="Blason 4° RIISC">
 <p class="P0-UNIT">Cellule Secourisme du 4° RIISC</p>
-<img src="../phonix.png" alt="4° RIISC">
 <h1>Bilan Secouriste</h1>
 <button class="BTN BTN-WHITE" style="max-width:280px;margin-top:24px" onclick="nouveau()">▶ NOUVEAU BILAN</button>
 <button id="BTN-RES" class="BTN BTN-BLU HIDDEN" style="max-width:280px;margin-top:10px" onclick="ouvrirHub()">↩ REPRENDRE</button>
@@ -138,8 +138,8 @@ body.dark .BIB-META{color:#aaa}
 </div>
 
 <div id="P-RESUME" class="SCREEN HIDDEN">
+<img src="phonix.png" class="SEC-LOGO" alt="Blason 4° RIISC">
 <p class="P0-UNIT">Cellule Secourisme du 4° RIISC</p>
-<img src="../phonix.png" alt="4° RIISC">
 <h1>Bilan en cours</h1>
 <p class="RESUME-HINT">La tablette a retrouvé un bilan commencé.<br>Que voulez-vous faire ?</p>
 <div id="RESUME-SUM" class="RESUME-SUM">—</div>
