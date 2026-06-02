@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="FR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>BILAN SECOURISTE - 4° RIISC</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Secourisme">
+<meta name="application-name" content="Secourisme">
+<meta name="theme-color" content="#B71C1C">
+<link rel="manifest" href="/formation-secouriste/manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="/formation-secouriste/icon-192.png">
+<link rel="apple-touch-icon" href="/formation-secouriste/icon-512.png">
+<style>
+:root{--red:#C62828;--red-d:#7f0000;--blue:#1565C0;--navy:#001a33;--ok:#2E7D32;--bg:#E8EAED;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{min-height:100%;min-height:100dvh}
+body{font-family:system-ui,sans-serif;margin:0;background:var(--bg);color:#1a1a1a;padding-bottom:calc(62px + var(--safe-bottom));min-height:100%;min-height:100dvh;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;overscroll-behavior:none}
+.SCREEN{max-width:520px;margin:0 auto;min-height:calc(100dvh - var(--safe-top) - var(--safe-bottom))}
+@media (display-mode:standalone),(display-mode:fullscreen){.SCREEN{max-width:none;width:100%}}
+.HIDDEN{display:none!important}
+#P0,#P-RESUME{background:radial-gradient(circle at 50% 30%,var(--red-d),var(--navy) 75%);color:#fff;text-align:center;padding:calc(32px + var(--safe-top)) 20px calc(40px + var(--safe-bottom));min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.SEC-LOGO{width:200px;height:auto;margin-bottom:22px;filter:drop-shadow(0 0 15px rgba(255,255,255,.4))}
+#P0 h1,#P-RESUME h1{font-size:1.45em;margin:4px 0;text-transform:uppercase}
+#P0 .P0-UNIT,#P-RESUME .P0-UNIT{font-size:1.45em;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin:0 0 16px;line-height:1.25;max-width:320px}
+.APP-HDR{background:var(--red-d);color:#fff;padding:calc(10px + var(--safe-top)) calc(14px + var(--safe-right)) 10px calc(14px + var(--safe-left));position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.HDR-TOP{display:flex;align-items:center;gap:10px}
+.BTN-BACK{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:8px;padding:8px 12px;font-weight:bold;font-size:.8em;cursor:pointer}
+.HDR-TITLE{flex:1;font-weight:800;font-size:1em;text-transform:uppercase}
+.CHK-BOX{width:26px;height:26px;flex-shrink:0;border:3px solid currentColor;border-radius:5px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-size:18px;font-weight:900;line-height:1}
+.CHK-BAR.on .CHK-BOX::after{content:'✕'}
+.CHK-BAR{display:flex;align-items:center;gap:10px;background:var(--red-d);border:2px solid var(--red);border-radius:10px;padding:12px 14px;margin-bottom:14px;cursor:pointer;color:#fff}
+.CHK-BAR.on{background:#fff;border-color:var(--red);color:var(--red-d)}
+.CHK-BAR-T{font-size:.82em;font-weight:800;line-height:1.35;color:inherit}
+.CHK-BAR-D{font-size:.72em;color:rgba(255,255,255,.88);font-weight:600;margin-top:2px}
+.CHK-BAR.on .CHK-BAR-D{color:#666}
+input.inp-off,textarea.inp-off{background:#eee;color:#888;pointer-events:none}
+.BTN-ICON-H{background:none;border:none;color:#fff;font-size:1.25em;cursor:pointer}
+.HUB-PAD{padding:14px 12px 80px}
+.HUB-STATUS-LBL{font-size:.65em;font-weight:800;text-transform:uppercase;color:#888;margin-bottom:4px;letter-spacing:.5px}
+.HUB-STATUS{background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.78em;border-left:4px solid var(--blue);line-height:1.45}
+.HUB-STATUS.empty{border-left-color:#ccc;color:#666;font-style:italic}
+.HUB-HINT{text-align:center;font-size:.8em;color:#555;margin-bottom:12px;font-weight:600}
+.HUB-GRID{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.TILE{background:#fff;border-radius:16px;border:none;padding:20px 12px;cursor:pointer;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1);position:relative}
+.TILE-STEP{position:absolute;top:8px;left:8px;background:var(--blue);color:#fff;width:22px;height:22px;border-radius:50%;font-size:.62em;font-weight:900;line-height:22px;z-index:1}
+.TILE-DONE .TILE-STEP{background:var(--ok)}
+.TILE-NEXT{box-shadow:0 0 0 3px var(--blue),0 2px 14px rgba(21,101,192,.35)}
+.HUB-ORDER{background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.72em;line-height:1.55;border-left:4px solid var(--blue)}
+.HUB-ORDER b{color:var(--blue)}
+.BTN-NEXT{margin-top:16px}
+.TILE:active{transform:scale(.96)}
+.TILE-ICO{font-size:2.6em;display:block;margin-bottom:8px}
+.TILE-LBL{font-size:.72em;font-weight:800;text-transform:uppercase;color:#333}
+.TILE-URG{border:3px solid var(--red);background:#FFF5F5}
+.BADGE{position:absolute;top:8px;right:8px;width:10px;height:10px;border-radius:50%;background:#ccc}
+.BADGE.ok{background:var(--ok)}.BADGE.alert{background:var(--red)}
+.SUBTABS{display:flex;background:#fff;border-bottom:2px solid #ddd;overflow-x:auto;position:sticky;top:48px;z-index:90}
+.SUBTAB{flex:1;padding:12px 8px;border:none;background:transparent;font-weight:bold;font-size:.72em;text-transform:uppercase;color:#777;cursor:pointer;border-bottom:3px solid transparent}
+.SUBTAB.on{color:var(--blue);border-bottom-color:var(--blue);background:#F0F7FF}
+.PANEL{padding:14px 12px 90px}
+label{display:block;font-weight:700;font-size:.72em;color:#555;margin:14px 0 5px;text-transform:uppercase}
+input,select,textarea{width:100%;padding:13px;border:2px solid #ccc;border-radius:10px;font-size:16px;background:#fff;margin-bottom:4px;-webkit-appearance:none}
+textarea{min-height:70px;resize:vertical;font-family:inherit}
+.CHOICES{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.CHOICE{padding:14px 10px;border:2px solid #ccc;border-radius:10px;background:#f7f7f7;font-weight:700;font-size:.8em;cursor:pointer;text-align:center;flex:1;min-width:calc(50% - 6px)}
+.CHOICE.on{background:var(--blue);color:#fff;border-color:#0D47A1}
+.CHOICE.red.on{background:var(--red);border-color:var(--red-d);color:#fff}
+.CHOICE.wide-btn{min-width:100%;text-align:left;line-height:1.35;padding:14px 12px}
+.CHOICE.wide-btn small{display:block;font-weight:600;opacity:.85;margin-top:2px}
+.BIG-URG{display:grid;gap:8px}
+.BU{display:flex;align-items:center;gap:12px;padding:14px;border:2px solid #ddd;border-radius:12px;background:#fafafa;cursor:pointer;text-align:left}
+.BU.on{border-color:var(--red);background:#FFEBEE}
+.BU-ICO{font-size:1.6em}
+ .BU-TXT{font-size:.85em;font-weight:700;line-height:1.3}
+ .BU-D{font-size:.72em;color:#666;font-weight:400}
+.TALKIE{background:#0d0d0d;color:#69F0AE;border:3px solid var(--red);border-radius:14px;padding:18px;font-size:1.1em;line-height:1.55;font-weight:600;white-space:pre-wrap;max-height:55vh;overflow-y:auto}
+.TALKIE-CTL{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;justify-content:center}
+.TALKIE-CTL .BTN{flex:1;min-width:138px;margin:0}
+.BTN{display:block;width:100%;padding:15px;border:none;border-radius:10px;font-weight:800;font-size:.88em;text-transform:uppercase;cursor:pointer;margin-top:10px}
+.BTN-PRI{background:var(--red);color:#fff}
+.BTN-SEC{background:#546E7A;color:#fff}
+.BTN-BLU{background:var(--blue);color:#fff}
+.BTN-ORG{background:#F39C12;color:#fff}
+.BTN-WHITE{background:#fff;color:var(--navy)}
+.BTN-SML{display:inline-block;width:auto;padding:10px 16px;font-size:.78em;margin:0 6px 8px 0}
+.BIB-PAD{padding:14px 12px 80px}
+.BIB-ITEM{background:#fff;border-radius:10px;border-left:4px solid var(--blue);padding:12px;margin-bottom:10px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.BIB-HDR{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;font-weight:800;font-size:.8em}
+.BIB-META{font-size:.72em;color:#666;font-weight:600;margin-top:4px}
+.BIB-DEL{background:var(--red);color:#fff;border:none;border-radius:6px;padding:6px 10px;font-size:.72em;font-weight:800;cursor:pointer;flex-shrink:0}
+.BIB-TXT{background:#0d0d0d;color:#69F0AE;border-radius:8px;padding:12px;font-size:.82em;line-height:1.5;white-space:pre-wrap;margin-top:10px;display:none}
+.BIB-ITEM.open .BIB-TXT{display:block}
+.BIB-EMPTY{text-align:center;color:#666;font-size:.85em;padding:24px 12px;font-style:italic}
+#P0 .BTN-SEC,#P-RESUME .BTN-SEC{background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.35)}
+.RESUME-HINT{font-size:.92em;opacity:.92;margin:10px 0 14px;max-width:320px;line-height:1.45}
+.RESUME-SUM{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.28);border-radius:12px;padding:14px 16px;max-width:320px;width:100%;margin:0 auto 22px;font-size:.86em;line-height:1.55;text-align:left}
+.BOTTOM-NAV{position:fixed;bottom:0;left:0;right:0;background:var(--red-d);display:flex;z-index:200;padding-bottom:var(--safe-bottom);padding-left:var(--safe-left);padding-right:var(--safe-right)}
+.BNAV{flex:1;padding:12px 4px;border:none;background:transparent;color:rgba(255,255,255,.7);font-size:.62em;font-weight:800;text-transform:uppercase;cursor:pointer}
+.BNAV.on{color:#fff;background:rgba(255,255,255,.12)}
+.BNAV-ICO{display:block;font-size:1.35em;margin-bottom:2px}
+.FLOAT-SAMU{position:fixed;bottom:calc(68px + var(--safe-bottom));right:calc(14px + var(--safe-right));background:var(--red);color:#fff;border:3px solid #fff;border-radius:50px;padding:14px 20px;font-weight:900;font-size:.78em;cursor:pointer;z-index:150;box-shadow:0 4px 16px rgba(0,0,0,.35)}
+.CHRONO{position:fixed;top:calc(58px + var(--safe-top));right:calc(12px + var(--safe-right));z-index:250;background:var(--navy);color:#fff;font-family:ui-monospace,monospace;font-weight:900;font-size:1.05em;padding:7px 13px;border-radius:20px;border:2px solid rgba(255,255,255,.35);box-shadow:0 2px 10px rgba(0,0,0,.25);pointer-events:none;letter-spacing:.04em}
+.INSTALL-BANNER{position:fixed;bottom:calc(12px + var(--safe-bottom));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));z-index:300;background:linear-gradient(135deg,var(--red-d),var(--navy));color:#fff;border:2px solid rgba(255,255,255,.35);border-radius:16px;padding:14px 16px;box-shadow:0 8px 28px rgba(0,0,0,.45);display:flex;align-items:center;gap:12px;animation:installSlide .45s ease}
+.INSTALL-BANNER.HIDDEN{display:none!important}
+.INSTALL-BANNER-ICO{font-size:2em;flex-shrink:0;line-height:1}
+.INSTALL-BANNER-TXT{flex:1;font-size:.78em;line-height:1.4;font-weight:600}
+.INSTALL-BANNER-TXT b{display:block;font-size:1.05em;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.INSTALL-BANNER-ACT{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.INSTALL-BTN{background:#fff;color:var(--red-d);border:none;border-radius:10px;padding:10px 14px;font-weight:800;font-size:.72em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.INSTALL-DIS{background:transparent;color:rgba(255,255,255,.75);border:none;font-size:.65em;font-weight:700;cursor:pointer;text-decoration:underline;padding:2px 4px}
+@keyframes installSlide{from{transform:translateY(120%);opacity:0}to{transform:translateY(0);opacity:1}}
+@media (display-mode:standalone),(display-mode:fullscreen){.INSTALL-BANNER,#P0 .BTN-INSTALL,#INSTALL-WARN{display:none!important}}
+#P0 .BTN-INSTALL{background:rgba(255,255,255,.2);color:#fff;border:2px solid rgba(255,255,255,.45);max-width:280px;margin-top:14px}
+#INSTALL-WARN{max-width:320px;margin-top:10px;padding:12px 14px;background:rgba(255,193,7,.18);border:2px solid rgba(255,235,59,.55);border-radius:12px;font-size:.74em;line-height:1.45;text-align:left;color:#fff}
+#INSTALL-WARN b{color:#FFEB3B}
+.INSTALL-OVERLAY{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + var(--safe-top));padding-bottom:calc(16px + var(--safe-bottom))}
+.INSTALL-OVERLAY.HIDDEN{display:none!important}
+.INSTALL-MODAL{background:linear-gradient(160deg,#fff,#f5f5f5);color:#1a1a1a;border-radius:18px;max-width:360px;width:100%;padding:22px 18px 18px;box-shadow:0 12px 40px rgba(0,0,0,.45);max-height:85dvh;overflow-y:auto}
+.INSTALL-MODAL h2{margin:0 0 12px;font-size:1.05em;text-transform:uppercase;color:var(--red-d)}
+.INSTALL-MODAL ol{margin:0 0 14px;padding-left:1.2em;font-size:.86em;line-height:1.55}
+.INSTALL-MODAL li{margin-bottom:8px}
+.INSTALL-MODAL .warn{background:#FFF3E0;border:2px solid #FFB74D;border-radius:10px;padding:10px 12px;font-size:.78em;line-height:1.45;margin-bottom:14px}
+.INSTALL-MODAL .url{background:#263238;color:#69F0AE;border-radius:8px;padding:10px 12px;font-size:.72em;word-break:break-all;margin-bottom:14px;font-family:ui-monospace,monospace;line-height:1.45}
+.INSTALL-MODAL .BTN{margin-top:0}
+.CHRONO.done{background:var(--ok);border-color:#fff}
+body.dark .CHRONO{background:#0d47a1}
+body.dark .CHRONO.done{background:#1B5E20}
+.SECT-HINT{font-size:.74em;color:#666;margin:0 0 12px;line-height:1.4}
+.CONST-GRID{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;margin-bottom:8px}
+.CONST-GRID label{margin-top:10px}
+.CONST-GRID input{margin-bottom:6px}
+.BODY-MAP{text-align:center;background:#fff;border:2px solid #ddd;border-radius:12px;padding:10px 6px 6px;margin-bottom:8px}
+.BODY-SVG{max-width:200px;width:55%;height:auto;touch-action:manipulation;display:block;margin:0 auto}
+.BODY-ZONE{fill:rgba(21,101,192,.15);stroke:var(--blue);stroke-width:1.2;cursor:pointer}
+.BODY-ZONE.on{fill:rgba(198,40,40,.55);stroke:var(--red);stroke-width:2.5}
+.BODY-ZONE.sel{fill:rgba(21,101,192,.35);stroke:var(--blue);stroke-width:3;stroke-dasharray:4 2}
+.ZONE-PICK{background:#F0F7FF;border:2px solid var(--blue);border-radius:10px;padding:12px;margin:10px 0}
+.ZONE-LIST{margin:6px 0 10px;line-height:1.8}
+.ZONE-TAG{display:inline-flex;align-items:center;gap:4px;background:#FFEBEE;border:1px solid var(--red);color:var(--red-d);border-radius:6px;padding:3px 8px;margin:2px;font-size:.72em;font-weight:800}
+.ZONE-TAG-X{background:var(--red);color:#fff;border:none;border-radius:4px;padding:2px 6px;font-size:.85em;cursor:pointer;font-weight:900;line-height:1}
+body.dark{background:#0a0a0a;color:#FFD700}
+body.dark .BODY-MAP{background:#161616;border-color:#444}
+body.dark .BODY-ZONE{fill:rgba(21,101,192,.25);stroke:#64B5F6}
+body.dark .BODY-ZONE.on{fill:rgba(198,40,40,.6);stroke:#EF5350}
+body.dark .BODY-ZONE.sel{fill:rgba(21,101,192,.4);stroke:#64B5F6}
+body.dark .ZONE-PICK{background:#1a2744;border-color:#64B5F6}
+body.dark .ZONE-TAG{background:#3E0000;border-color:#EF5350;color:#FFCDD2}
+body.dark .TILE,body.dark .HUB-STATUS,body.dark input,body.dark select,body.dark textarea{background:#161616;border-color:#444;color:#FFD700}
+body.dark .CHOICE,body.dark .BU{background:#1a1a1a;border-color:#444;color:#FFD700}
+body.dark .HUB-ORDER{background:#161616;border-color:#64B5F6}
+body.dark .BIB-ITEM{background:#161616;border-color:#64B5F6}
+body.dark .BIB-META{color:#aaa}
+</style>
+</head>
+<body>
+
+<div id="P0" class="SCREEN">
+<img src="phonix.png" class="SEC-LOGO" alt="Blason 4° RIISC">
+<p class="P0-UNIT">Cellule Secourisme du 4° RIISC</p>
+<h1>Bilan Secouriste</h1>
+<button class="BTN BTN-WHITE" style="max-width:280px;margin-top:24px" onclick="nouveau()">▶ NOUVEAU BILAN</button>
+<button id="BTN-RES" class="BTN BTN-BLU HIDDEN" style="max-width:280px;margin-top:10px" onclick="ouvrirHub()">↩ REPRENDRE</button>
+<button class="BTN BTN-SEC" style="max-width:280px;margin-top:10px" onclick="ouvrirBib()">📚 Bibliothèque CR talkie <span id="BIB-COUNT-P0"></span></button>
+<button id="BTN-INSTALL-P0" class="BTN BTN-INSTALL HIDDEN" onclick="proposerInstall()">📲 Installer l'application</button>
+<div id="INSTALL-WARN" class="HIDDEN"></div>
+</div>
+
+<div id="P-RESUME" class="SCREEN HIDDEN">
+<img src="phonix.png" class="SEC-LOGO" alt="Blason 4° RIISC">
+<p class="P0-UNIT">Cellule Secourisme du 4° RIISC</p>
+<h1>Bilan en cours</h1>
+<p class="RESUME-HINT">La tablette a retrouvé un bilan commencé.<br>Que voulez-vous faire ?</p>
+<div id="RESUME-SUM" class="RESUME-SUM">—</div>
+<button class="BTN BTN-WHITE" style="max-width:280px" onclick="reprendre()">↩ CONTINUER LE BILAN</button>
+<button class="BTN BTN-SEC" style="max-width:280px;margin-top:12px" onclick="nouveauDepuisResume()">▶ NOUVEAU BILAN</button>
+</div>
+
+<div id="P-BIB" class="SCREEN HIDDEN">
+<div class="APP-HDR">
+<div class="HDR-TOP"><button class="BTN-BACK" onclick="show('P0')">← Accueil</button><span class="HDR-TITLE">📚 CR talkie</span><button class="BTN-ICON-H" onclick="toggleTheme()">🌙</button></div>
+</div>
+<div class="BIB-PAD" id="BIB-LIST"></div>
+</div>
+
+<div id="P-HUB" class="SCREEN HIDDEN">
+<div class="APP-HDR">
+<div class="HDR-TOP"><span class="HDR-TITLE">Bilan en cours</span><button class="BTN-ICON-H" onclick="toggleTheme()">🌙</button><button class="BTN-ICON-H" onclick="if(confirm('Effacer?'))reset()">🗑</button></div>
+</div>
+<div class="HUB-PAD">
+<p class="HUB-HINT" id="HUB-HINT">—</p>
+<div class="HUB-ORDER" id="HUB-ORDER"></div>
+<div class="HUB-STATUS-LBL">Résumé (se met à jour tout seul)</div>
+<div class="HUB-STATUS" id="HUB-STATUS">—</div>
+<div class="HUB-GRID" id="HUB-GRID"></div>
+</div>
+</div>
+
+<div id="P-MOD" class="SCREEN HIDDEN">
+<div class="APP-HDR">
+<div class="HDR-TOP"><button class="BTN-BACK" onclick="ouvrirHub()">← Hub</button><span class="HDR-TITLE" id="MOD-TITLE">—</span><button class="BTN-ICON-H" onclick="toggleTheme()">🌙</button></div>
+</div>
+<div class="SUBTABS HIDDEN" id="SUBTABS"></div>
+<div class="PANEL" id="MOD-PANEL"></div>
+</div>
+
+<div id="BNAV" class="BOTTOM-NAV HIDDEN">
+<button class="BNAV on" onclick="ouvrirHub()"><span class="BNAV-ICO">⊞</span>Hub</button>
+<button class="BNAV" onclick="ouvrirMod('samu')"><span class="BNAV-ICO">📻</span>SAMU</button>
+</div>
+<button id="FLOAT-SAMU" class="FLOAT-SAMU HIDDEN" onclick="ouvrirMod('samu')">📻 SAMU</button>
+<div id="CHRONO" class="CHRONO HIDDEN">⏱ 00:00</div>
+
+<div id="INSTALL-BANNER" class="INSTALL-BANNER HIDDEN">
+<span class="INSTALL-BANNER-ICO">📲</span>
+<div class="INSTALL-BANNER-TXT"><b>Installer Secourisme</b>Accès direct, plein écran, sans barre du navigateur.</div>
+<div class="INSTALL-BANNER-ACT">
+<button class="INSTALL-BTN" type="button" onclick="proposerInstall()">Installer</button>
+<button class="INSTALL-DIS" type="button" onclick="masquerInstallUi(true)">Plus tard</button>
+</div>
+</div>
+
+<div id="INSTALL-OVERLAY" class="INSTALL-OVERLAY HIDDEN" onclick="if(event.target===this)fermerModaleInstall()">
+<div class="INSTALL-MODAL">
+<h2>📲 Installer sur l'écran d'accueil</h2>
+<div id="INSTALL-MODAL-BODY"></div>
+<button class="BTN BTN-BLU" type="button" onclick="fermerModaleInstall()">Compris</button>
+</div>
+</div>
+
+<script>
+var KEY='secourisme_eleve_v1',ARCHIVE_KEY='secourisme_archive_v1',TALKIE_KEY='sec_talkie',TALKIE_MSG='Kodi ici unité, parlez.',MAX_ARCHIVE=15,modActif=null,zoneActif=null,chronoIv=null,talkieCtx=null,talkieNodes=[];
+var HUB=[
+ {id:'contexte',ico:'📍',lbl:'Contexte'},
+ {id:'urgences',ico:'🚨',lbl:'Urgences'},
+ {id:'etat',ico:'❤️',lbl:'Pouls & constantes'},
+ {id:'victime',ico:'👤',lbl:'Victime'},
+ {id:'gestes',ico:'🩹',lbl:'Gestes'},
+ {id:'samu',ico:'📻',lbl:'SAMU (15)'}
+];
+function stepDone(id){
+ if(!B)return false;
+ var v=B.v;
+ if(id==='contexte')return !!(B.ctx.LIEU&&B.ctx.RELEVEUR);
+ if(id==='urgences')return !!v.AVPU;
+ if(id==='etat')return !!(v.RESPI&&v.POULS&&v.HEMO);
+ if(id==='victime')return !!(v.INCONNUE||v.NOM||Object.keys(v.ZONES||{}).length);
+ if(id==='gestes')return B.GESTES.length>0||!!B.v.SANS_GESTE;
+ if(id==='samu')return stepDone('contexte')&&stepDone('urgences')&&stepDone('etat');
+ return false;
+}
+function nextStepId(){
+ for(var i=0;i<HUB.length;i++)if(!stepDone(HUB[i].id))return HUB[i].id;
+ return 'samu';
+}
+function hubStepNum(id){for(var i=0;i<HUB.length;i++)if(HUB[i].id===id)return i+1;return 0;}
+function btnSuivant(){
+ if(!modActif||modActif==='samu')return '';
+ var n=hubStepNum(modActif);
+ return '<button type="button" class="BTN BTN-BLU BTN-NEXT" onclick="suivant()">Étape suivante → ('+(n+1)+'/6)</button>';
+}
+function suivant(){
+ var i=HUB.findIndex(function(h){return h.id===modActif;});
+ if(i>=0&&i<HUB.length-1)ouvrirMod(HUB[i+1].id);
+ else ouvrirMod('samu');
+}
+function renderHubHint(){
+ var next=nextStepId(),done=HUB.filter(function(h){return stepDone(h.id);}).length;
+ var hint=document.getElementById('HUB-HINT'),ord=document.getElementById('HUB-ORDER');
+ if(!hint||!ord)return;
+ if(done===HUB.length)hint.innerHTML='✅ Bilan prêt — <b>📻 SAMU</b> pour transmettre'+(B.chronoStart?' · ⏱ '+chronoFmt(chronoMs()):'');
+ else{
+  var h=HUB.find(function(x){return x.id===next;});
+  hint.innerHTML='Prochaine étape : <b>'+(h?h.ico+' '+h.lbl:'')+'</b> · '+done+'/'+HUB.length+' faites';
+ }
+ ord.innerHTML='<b>Ordre PSE du releveur</b><br>1 Contexte → 2 Urgences (AVPU) → 3 Pouls & constantes → 4 Victime → 5 Gestes → 6 SAMU';
+}
+var URG=[
+ {id:'AC',ico:'💔',t:'Arrêt cardiaque',d:''},
+ {id:'OBST',ico:'🤐',t:'Obstruction VA',d:'voies aériennes'},
+ {id:'HEMO',ico:'🩸',t:'Hémorragie sévère',d:''},
+ {id:'INCONSC',ico:'😵',t:'Inconscience',d:''},
+ {id:'DETRESSE',ico:'😮‍💨',t:'Détresse respiratoire',d:''}
+];
+var GESTES=[
+ {id:'PLS',l:'PLS (position latérale de sécurité)'},
+ {id:'RCP-DEA',l:'RCP + DEA (massage cardiaque et chocs du défibrillateur)'},
+ {id:'Maintien',l:'Maintien (tête, membre — éviter aggravation)'},
+ {id:'Attelle',l:'Attelle (rigide ou coussin d\'air — bras, jambe)'},
+ {id:'Echarpe',l:'Écharpe (immobilisation membre supérieur)'},
+ {id:'Couverture survie',l:'Couverture de survie (urgences thermiques)'},
+ {id:'Brancard',l:'Brancard (évacuation victime)'},
+ {id:'Pansement',l:'Pansement'},
+ {id:'Compression',l:'Compression'},
+ {id:'Garrot',l:'Garrot'},
+ {id:'Surveillance',l:'Surveillance'},
+ {id:'O2',l:'O₂ (oxygène)'}
+];
+var CIRCS=[
+ {v:'Chute',l:'Chute'},
+ {v:'Malaise',l:'Malaise'},
+ {v:'AVP',l:'AVP (accident de la voie publique)'},
+ {v:'Arrêt cardiaque',l:'Arrêt cardiaque'},
+ {v:'Sport / exercice',l:'Sport / exercice'},
+ {v:'Autre',l:'Autre'}
+];
+var AVPU_OPTS=[
+ {v:'A',t:'A — Alert',d:'(Alerte — victime éveillée, consciente)'},
+ {v:'V',t:'V — Verbal',d:'(Verbal — répond quand on lui parle)'},
+ {v:'P',t:'P — Pain',d:'(Pain — réagit uniquement à la douleur)'},
+ {v:'U',t:'U — Unresponsive',d:'(Unresponsive — ne réagit plus du tout)'}
+];
+var POULS_OPTS=[
+ {v:'PSR',t:'Perçu, symétrique et régulier',d:'(normal — cas le plus fréquent)'},
+ {v:'FRAPPE',t:'Frappé',d:'(fort et rapide — le pouls « frappe » sous les doigts)'},
+ {v:'ABSENT',t:'Absent',d:'(aucun pouls palpable)'},
+ {v:'NON',t:'Non perçu',d:'(impossible à palper)'}
+];
+var BODY_ZONES=[
+ {id:'TETE',l:'Tête',e:'ellipse',a:{cx:50,cy:20,rx:15,ry:17}},
+ {id:'COU',l:'Cou',e:'rect',a:{x:44,y:36,width:12,height:10},rx:2},
+ {id:'THORAX',l:'Thorax',e:'rect',a:{x:30,y:47,width:40,height:32},rx:4},
+ {id:'ABDOMEN',l:'Abdomen',e:'rect',a:{x:32,y:79,width:36,height:28},rx:4},
+ {id:'BASSIN',l:'Bassin',e:'rect',a:{x:34,y:107,width:32,height:14},rx:3},
+ {id:'BRAS_G',l:'Bras gauche',e:'rect',a:{x:10,y:48,width:16,height:50},rx:6},
+ {id:'BRAS_D',l:'Bras droit',e:'rect',a:{x:74,y:48,width:16,height:50},rx:6},
+ {id:'JAMBE_G',l:'Jambe gauche',e:'rect',a:{x:34,y:121,width:14,height:52},rx:5},
+ {id:'JAMBE_D',l:'Jambe droite',e:'rect',a:{x:52,y:121,width:14,height:52},rx:5},
+ {id:'PIED_G',l:'Pied gauche',e:'ellipse',a:{cx:41,cy:180,rx:11,ry:7}},
+ {id:'PIED_D',l:'Pied droit',e:'ellipse',a:{cx:59,cy:180,rx:11,ry:7}}
+];
+var PLAIE_OPTS=[
+ {id:'OUVERTE',l:'Plaie ouverte'},
+ {id:'FERMEE',l:'Plaie fermée'},
+ {id:'CONTUSION',l:'Contusion'},
+ {id:'BRULURE',l:'Brûlure'},
+ {id:'DEFORM',l:'Déformation (fracture ?)'},
+ {id:'DOULEUR',l:'Douleur sans signe visible'}
+];
+
+function emptyB(){return{
+ ctx:{RELEVEUR:'',HEURE:'',LIEU:'',CIRC:'',CIRC_TXT:'',NB_V:1},
+ v:{INCONNUE:false,NOM:'',PRENOM:'',AGE:'',PLAINTES:'',ALLERG:'',URG:{},AVPU:'',POSITION:'',
+    RESPI:'',POULS:'',HEMO:'',HEMO_LOC:'',FC:'',FR:'',TA:'',SPO2:'',GLYC:'',TEMP:'',LESIONS:'',ZONES:{},SANS_GESTE:false},
+ GESTES:[]};}
+
+function load(){try{var s=localStorage.getItem(KEY);B=s?JSON.parse(s):null;if(B){migratePouls();migrateZones();migrateGestes();syncInconnueUrg();if(B.v&&B.v.HEMO==='Stigmates'){B.v.HEMO='Non';B.v.HEMO_LOC='';}if(B.GESTES)B.GESTES=B.GESTES.filter(function(g){return g!=='Alerte 15/112';});}}catch(e){B=null;}}
+function startChrono(){if(!B)return;B.chronoStart=Date.now();B.chronoEnd=null;}
+function stopChrono(){if(B&&!B.chronoEnd&&B.chronoStart)B.chronoEnd=Date.now();save();}
+function chronoMs(){if(!B||!B.chronoStart)return 0;var end=B.chronoEnd||Date.now();return Math.max(0,end-B.chronoStart);}
+function chronoFmt(ms){var t=Math.floor(ms/1000),m=Math.floor(t/60);t=t%60;return String(m).padStart(2,'0')+':'+String(t).padStart(2,'0');}
+function updateChronoUI(){
+ var el=document.getElementById('CHRONO');if(!el)return;
+ if(!B||!B.chronoStart){el.classList.add('HIDDEN');return;}
+ el.classList.remove('HIDDEN');el.classList.toggle('done',!!B.chronoEnd);
+ el.textContent='⏱ '+chronoFmt(chronoMs());
+}
+function syncChronoDisplay(on){if(on&&!chronoIv)chronoIv=setInterval(updateChronoUI,250);if(!on&&chronoIv){clearInterval(chronoIv);chronoIv=null;}updateChronoUI();}
+function migrateGestes(){
+ if(!B||!B.GESTES)return;
+ var r=B.GESTES.indexOf('RCP')>=0,d=B.GESTES.indexOf('DEA')>=0;
+ if(r||d){
+  B.GESTES=B.GESTES.filter(function(g){return g!=='RCP'&&g!=='DEA';});
+  if(B.GESTES.indexOf('RCP-DEA')<0)B.GESTES.push('RCP-DEA');
+ }
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(B));updateAccueilBtns();updateBibCount();}
+function show(id){['P0','P-RESUME','P-HUB','P-MOD','P-BIB'].forEach(function(p){document.getElementById(p).classList.toggle('HIDDEN',p!==id);});
+ document.getElementById('BNAV').classList.toggle('HIDDEN',id==='P0'||id==='P-RESUME'||id==='P-BIB');
+ document.getElementById('FLOAT-SAMU').classList.toggle('HIDDEN',id==='P0'||id==='P-RESUME'||id==='P-BIB'||id==='P-MOD'&&modActif==='samu');
+ syncChronoDisplay(id==='P-HUB'||id==='P-MOD');}
+function updateAccueilBtns(){var e=document.getElementById('BTN-RES');if(e)e.classList.toggle('HIDDEN',!B);}
+function renderResumeScreen(){
+ var el=document.getElementById('RESUME-SUM');if(!el||!B)return;
+ var done=HUB.filter(function(h){return stepDone(h.id);}).length,v=B.v;
+ var s='<b>'+esc(B.ctx.LIEU||'(lieu non renseigné)')+'</b>';
+ if(B.ctx.HEURE)s+=' · '+esc(B.ctx.HEURE);
+ if(B.ctx.RELEVEUR)s+='<br>Releveur : '+esc(B.ctx.RELEVEUR);
+ s+='<br>Progression : '+done+' / 6 étapes';
+ var next=nextStepId(),h=HUB.find(function(x){return x.id===next;});
+ if(h&&done<6)s+='<br>Prochaine : '+h.ico+' '+h.lbl;
+ var urg=Object.keys(v.URG||{}).filter(function(k){return v.URG[k];});
+ if(urg.length)s+='<br>🚨 '+urg.map(function(k){var u=URG.find(function(x){return x.id===k;});return u?u.t:k;}).join(', ');
+ if(B.chronoStart)s+='<br>⏱ '+chronoFmt(chronoMs())+(B.chronoEnd?' (chrono arrêté)':' en cours');
+ el.innerHTML=s;
+}
+function reprendre(){if(B&&!B.chronoStart)startChrono();save();ouvrirHub();}
+function nouveauDepuisResume(){if(!confirm('Effacer le bilan en cours et recommencer à zéro ?'))return;B=emptyB();B.ctx.HEURE=heure();startChrono();save();ouvrirMod('contexte');}
+function demarrerApp(){
+ load();updateBibCount();updateAccueilBtns();
+ if(B){renderResumeScreen();show('P-RESUME');}
+ else show('P0');
+}
+function loadArchive(){try{var a=JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'[]');return Array.isArray(a)?a:[];}catch(e){return[];}}
+function saveArchive(a){localStorage.setItem(ARCHIVE_KEY,JSON.stringify(a.slice(0,MAX_ARCHIVE)));}
+function updateBibCount(){
+ var n=loadArchive().length,s=n?'('+n+')':'';
+ var e=document.getElementById('BIB-COUNT-P0');if(e)e.textContent=s;
+}
+function archiveLbl(){return(B.ctx.LIEU||'Lieu non renseigné')+' · '+(B.ctx.RELEVEUR||'Releveur')+' · '+(B.ctx.HEURE||heure());}
+function pushArchive(){
+ if(!B||!window._lastTalkie||!B.ctx.LIEU)return;
+ var a=loadArchive();
+ if(a.length&&a[0].txt===window._lastTalkie)return;
+ a.unshift({id:Date.now(),h:B.ctx.HEURE||heure(),lbl:archiveLbl(),txt:window._lastTalkie});
+ saveArchive(a);updateBibCount();
+}
+function ouvrirBib(){renderBib();show('P-BIB');}
+function renderBib(){
+ var el=document.getElementById('BIB-LIST'),a=loadArchive();
+ if(!a.length){el.innerHTML='<p class="BIB-EMPTY">Aucun CR enregistré.<br>Ouvrez 📻 SAMU pour enregistrer automatiquement.</p>';return;}
+ var h='<button class="BTN BTN-PRI BTN-SML" onclick="if(confirm(\'Effacer toute la bibliothèque ?\'))clearArchive()">🗑 Tout effacer</button>';
+ a.forEach(function(it,i){
+  h+='<div class="BIB-ITEM" id="bib-'+it.id+'" onclick="toggleBib('+it.id+')"><div class="BIB-HDR"><span>📻 '+esc(it.h)+' — '+esc(it.lbl)+'</span><button type="button" class="BIB-DEL" onclick="event.stopPropagation();delArchive('+i+')">✕</button></div><div class="BIB-META">Toucher pour lire le CR complet</div><div class="BIB-TXT">'+esc(it.txt)+'</div></div>';
+ });
+ el.innerHTML=h;
+}
+function toggleBib(id){var el=document.getElementById('bib-'+id);if(el)el.classList.toggle('open');}
+function delArchive(i){if(!confirm('Supprimer ce CR ?'))return;var a=loadArchive();a.splice(i,1);saveArchive(a);renderBib();updateBibCount();}
+function clearArchive(){saveArchive([]);renderBib();updateBibCount();}
+function heure(){var d=new Date();return String(d.getHours()).padStart(2,'0')+'H'+String(d.getMinutes()).padStart(2,'0');}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+function chCtx(f,v){
+ B.ctx[f]=v;
+ save();renderHubStatus();if(modActif==='samu')renderPanel();
+}
+function chV(f,v){
+ B.v[f]=v;
+ var rerender=false;
+ if(f==='AVPU'){maybeAutoInconnue();rerender=true;}
+ save();renderHubStatus();if(modActif==='samu'||rerender)renderPanel();
+}
+function chUrg(id){
+ if(!B.v.URG)B.v.URG={};
+ B.v.URG[id]=!B.v.URG[id];if(!B.v.URG[id])delete B.v.URG[id];
+ if(id==='INCONSC')maybeAutoInconnue();
+ if(id==='INCONSC'&&!B.v.URG.INCONSC&&B.v.INCONNUE&&!B.v.AVPU)B.v.INCONNUE=false;
+ save();renderPanel();renderHubStatus();
+}
+function syncInconnueUrg(){
+ if(!B||!B.v)return;
+ if(!B.v.URG)B.v.URG={};
+ if(B.v.INCONNUE)B.v.URG.INCONSC=true;
+}
+function inconnueBar(){
+ var on=!!B.v.INCONNUE;
+ return '<div class="CHK-BAR'+(on?' on':'')+'" onclick="toggleInconnue(!B.v.INCONNUE)"><span class="CHK-BOX"></span><div><div class="CHK-BAR-T">Victime INCONNUE</div><div class="CHK-BAR-D">Identité non renseignée — coche aussi Inconscience et remplit les champs automatiquement</div></div></div>';
+}
+function applyInconnueVals(){
+ B.v.NOM='';B.v.PRENOM='';B.v.AGE='Inconnu';
+ B.v.PLAINTES='Non renseignable (inconscient)';
+ B.v.ALLERG='Inconnues';
+}
+function clearInconnueVals(){
+ if(B.v.AGE==='Inconnu')B.v.AGE='';
+ if(B.v.PLAINTES==='Non renseignable (inconscient)')B.v.PLAINTES='';
+ if(B.v.ALLERG==='Inconnues')B.v.ALLERG='';
+}
+function toggleInconnue(on){
+ B.v.INCONNUE=!!on;
+ if(on){applyInconnueVals();syncInconnueUrg();}
+ else{
+  clearInconnueVals();
+  if(B.v.URG&&B.v.AVPU!=='U')delete B.v.URG.INCONSC;
+ }
+ save();renderHubStatus();renderPanel();
+}
+function maybeAutoInconnue(){
+ if(B.v.AVPU==='U'||B.v.URG.INCONSC){
+  if(!B.v.INCONNUE){B.v.INCONNUE=true;applyInconnueVals();syncInconnueUrg();}
+ }
+}
+function victimeId(){
+ if(B.v.INCONNUE)return 'identité inconnue';
+ return [B.v.PRENOM,B.v.NOM].filter(Boolean).join(' ')||'non identifiée';
+}
+function victimeAge(){
+ if(B.v.INCONNUE)return B.v.AGE||'Inconnu';
+ return B.v.AGE;
+}
+function chGest(id){var i=B.GESTES.indexOf(id);if(i>=0)B.GESTES.splice(i,1);else B.GESTES.push(id);B.v.SANS_GESTE=false;save();renderHubStatus();renderPanel();}
+function sansGestes(){B.v.SANS_GESTE=true;save();renderHubStatus();renderPanel();}
+function gesteLbl(id){var g=GESTES.find(function(x){return x.id===id;});return g?g.l:id;}
+function circLbl(v){var c=CIRCS.find(function(x){return x.v===v;});return c?c.l:v;}
+
+function choiceHtml(field,opts,cls,ctx){
+ var cur=ctx?B.ctx[field]:B.v[field],h='<div class="CHOICES">';
+ opts.forEach(function(o){var val=typeof o==='object'?o.v:o,lbl=typeof o==='object'?o.l:o;
+  h+='<button type="button" class="CHOICE '+(cls||'')+(cur===val?' on':'')+'" onclick="'+(ctx?'chCtx':'chV')+'(\''+field+'\',\''+val+'\');renderPanel()">'+lbl+'</button>';});
+ return h+'</div>';
+}
+function inp(lbl,f,ph,ctx,off){var v=ctx?B.ctx[f]:B.v[f];return '<label>'+lbl+'</label><input class="'+(off?'inp-off':'')+'" value="'+esc(v||'')+'" placeholder="'+(ph||'')+'" oninput="'+(ctx?'chCtx':'chV')+'(\''+f+'\',this.value)">';}
+function area(lbl,f,ph,ctx,off){var v=ctx?B.ctx[f]:B.v[f];return '<label>'+lbl+'</label><textarea class="'+(off?'inp-off':'')+'" placeholder="'+(ph||'')+'" oninput="'+(ctx?'chCtx':'chV')+'(\''+f+'\',this.value)">'+esc(v||'')+'</textarea>';}
+
+function nouveau(){if(B&&!confirm('Abandonner ?'))return;B=emptyB();B.ctx.HEURE=heure();startChrono();
+ save();ouvrirMod('contexte');}
+function reset(){B=null;localStorage.removeItem(KEY);updateAccueilBtns();syncChronoDisplay(false);stopTalkieNoise();show('P0');}
+function ouvrirHub(){if(!B){show('P0');return;}stopTalkieNoise();zoneActif=null;renderHubStatus();renderHubGrid();show('P-HUB');modActif=null;}
+function ouvrirMod(id){
+ var wasSamu=modActif==='samu';
+ modActif=id;
+ if(id==='samu'){stopChrono();if(!wasSamu)playTalkieFx();}
+ else stopTalkieNoise();
+ if(id!=='victime')zoneActif=null;
+ renderMod();show('P-MOD');
+}
+
+function renderMod(){
+ var h=HUB.find(function(x){return x.id===modActif;});
+ document.getElementById('MOD-TITLE').textContent=h?h.ico+' '+h.lbl:'';
+ document.getElementById('SUBTABS').classList.add('HIDDEN');
+ renderPanel();
+}
+function renderHubStatus(){
+ renderHubHint();
+ var el=document.getElementById('HUB-STATUS'),v=B.v,urg=Object.keys(v.URG||{}).filter(function(k){return v.URG[k];});
+ if(!B.ctx.LIEU&&!B.ctx.RELEVEUR&&!urg.length){
+  el.className='HUB-STATUS empty';
+  el.innerHTML='Rien encore — remplissez les icônes ci-dessous (commencez par 📍 Contexte).';
+  return;
+ }
+ el.className='HUB-STATUS';
+ var s='📻 '+(B.ctx.RELEVEUR||'Releveur')+' · '+(B.ctx.HEURE||'?')+' · '+(B.ctx.LIEU||'(lieu non renseigné)');
+ if(B.ctx.NB_V&&B.ctx.NB_V>1)s+=' · '+B.ctx.NB_V+' victimes';else if(B.ctx.NB_V)s+=' · 1 victime';
+ if(B.ctx.CIRC)s+='<br>'+circLbl(B.ctx.CIRC)+(B.ctx.CIRC_TXT?' — '+B.ctx.CIRC_TXT:'');
+ if(B.v.INCONNUE)s+='<br>👤 Victime : <b>identité inconnue</b>';
+ else if(B.v.NOM||B.v.PRENOM)s+='<br>👤 '+(B.v.PRENOM||'')+' '+(B.v.NOM||'');
+ if(urg.length)s+='<br>🚨 <span style="color:var(--red)">'+urg.map(function(k){var u=URG.find(function(x){return x.id===k;});return u?u.t:k;}).join(', ')+'</span>';
+ el.innerHTML=s;
+}
+function tileBadge(id){
+ var v=B.v;if(id==='urgences'&&Object.keys(v.URG||{}).some(function(k){return v.URG[k];}))return 'alert';
+ if(stepDone(id))return 'ok';
+ return '';
+}
+function renderHubGrid(){
+ var g=document.getElementById('HUB-GRID'),next=nextStepId();g.innerHTML='';
+ HUB.forEach(function(h,i){
+  var t=document.createElement('button');
+  t.className='TILE'+(stepDone(h.id)?' TILE-DONE':'')+(h.id===next?' TILE-NEXT':'');
+  var bd=tileBadge(h.id);
+  t.innerHTML='<span class="TILE-STEP">'+(i+1)+'</span><span class="BADGE'+(bd?' '+bd:'')+'"></span><span class="TILE-ICO">'+h.ico+'</span><span class="TILE-LBL">'+h.lbl+'</span>';
+  t.onclick=function(){ouvrirMod(h.id);};
+  g.appendChild(t);
+ });
+ renderHubHint();
+}
+function posLbl(v){return{ALLONGE:'allongée sur le dos',PLS:'PLS (position latérale de sécurité)',ASSISE:'assise',RCP:'RCP (réanimation cardio-pulmonaire) / DEA'}[v]||v||'?';}
+function avpuHtml(){
+ var cur=B.v.AVPU,h='<label>Conscience AVPU</label><p class="SECT-HINT" style="margin-top:0">A (Alerte) · V (Verbal) · P (Pain = douleur) · U (Unresponsive = inconscient)</p><div class="CHOICES">';
+ AVPU_OPTS.forEach(function(o){
+  h+='<button type="button" class="CHOICE wide-btn'+(cur===o.v?' on':'')+'" onclick="chV(\'AVPU\',\''+o.v+'\');renderPanel()">'+o.t+'<small>'+o.d+'</small></button>';
+ });
+ if(cur)h+='<p class="SECT-HINT" style="margin-top:10px"><b>Choix :</b> '+avpuLbl(cur)+'</p>';
+ return h+'</div>';
+}
+function avpuLbl(v){
+ var o=AVPU_OPTS.find(function(x){return x.v===v;});
+ return o?o.t+' '+o.d:(v||'?');
+}
+function migratePouls(){
+ if(!B||!B.v)return;
+ if(B.v.POULS&&POULS_OPTS.some(function(o){return o.v===B.v.POULS;}))return;
+ if(B.v.POULS_ETAT==='ABSENT'||B.v.POULS==='Absent')B.v.POULS='ABSENT';
+ else if(B.v.POULS_ETAT==='NON'||B.v.POULS==='Inconnu'||B.v.POULS==='Non perçu')B.v.POULS='NON';
+ else if(B.v.POULS_REG==='irrégulier'||B.v.POULS==='Frappé')B.v.POULS='FRAPPE';
+ else if(B.v.POULS_ETAT==='PERCU'||B.v.POULS==='Perçu')B.v.POULS='PSR';
+ delete B.v.POULS_ETAT;delete B.v.POULS_SYM;delete B.v.POULS_REG;
+}
+function poulsLbl(){
+ var o=POULS_OPTS.find(function(x){return x.v===B.v.POULS;});
+ return o?o.t:(B.v.POULS||'?');
+}
+function poulsHtml(){
+ var cur=B.v.POULS,h='<label>Pouls</label><div class="CHOICES">';
+ POULS_OPTS.forEach(function(o){
+  h+='<button type="button" class="CHOICE wide-btn'+(cur===o.v?' on':'')+'" onclick="chV(\'POULS\',\''+o.v+'\');renderPanel()">'+o.t+'<small>'+o.d+'</small></button>';
+ });
+ if(cur)h+='<p class="SECT-HINT" style="margin-top:10px"><b>Transmission :</b> Pouls '+poulsLbl()+'.</p>';
+ return h+'</div>';
+}
+function migrateZones(){
+ if(!B||!B.v)return;
+ if(!B.v.ZONES)B.v.ZONES={};
+ var z=B.v.ZONES,neu={};
+ for(var k in z){
+  if(z[k]===true)neu[k]='DOULEUR';
+  else if(typeof z[k]==='string')neu[k]=z[k];
+ }
+ B.v.ZONES=neu;
+ delete B.v.PLAIES;
+}
+function plaieLbl(id){var p=PLAIE_OPTS.find(function(x){return x.id===id;});return p?p.l:(id||'?');}
+function bodyZoneAttrs(a){var s='';for(var k in a)s+=' '+k+'="'+a[k]+'"';return s;}
+function chZone(id){
+ if(!B.v.ZONES)B.v.ZONES={};
+ zoneActif=id;
+ save();renderPanel();
+}
+function chZoneType(typeId){
+ if(!zoneActif)return;
+ if(!B.v.ZONES)B.v.ZONES={};
+ if(B.v.ZONES[zoneActif]===typeId){delete B.v.ZONES[zoneActif];zoneActif=null;}
+ else B.v.ZONES[zoneActif]=typeId;
+ save();renderHubStatus();renderPanel();
+}
+function rmZone(id){
+ if(B.v.ZONES)delete B.v.ZONES[id];
+ if(zoneActif===id)zoneActif=null;
+ save();renderHubStatus();renderPanel();
+}
+function bodyZonesLbl(){
+ if(!B.v.ZONES)return '';
+ return BODY_ZONES.filter(function(b){return B.v.ZONES[b.id];}).map(function(b){return b.l+' ('+plaieLbl(B.v.ZONES[b.id])+')';}).join(', ');
+}
+function bodyMapHtml(){
+ var z=B.v.ZONES||{},h='<label>Schéma du corps</label><p class="SECT-HINT" style="margin-top:0">1) Touchez une zone · 2) Choisissez le type de lésion · Obstruction VA → 🚨 Urgences</p><div class="BODY-MAP"><svg viewBox="0 0 100 210" class="BODY-SVG" xmlns="http://www.w3.org/2000/svg">';
+ BODY_ZONES.forEach(function(b){
+  var typ=z[b.id],cls='BODY-ZONE'+(typ?' on':'')+(zoneActif===b.id?' sel':''),rx=b.rx?' rx="'+b.rx+'"':'';
+  if(b.e==='ellipse')h+='<ellipse class="'+cls+'" onclick="chZone(\''+b.id+'\')"'+bodyZoneAttrs(b.a)+'/>';
+  else h+='<rect class="'+cls+'" onclick="chZone(\''+b.id+'\')"'+rx+bodyZoneAttrs(b.a)+'/>';
+ });
+ h+='</svg></div>';
+ var sel=BODY_ZONES.filter(function(b){return z[b.id];});
+ if(sel.length){
+  h+='<div class="ZONE-LIST">';
+  sel.forEach(function(b){h+='<span class="ZONE-TAG">'+b.l+' — '+plaieLbl(z[b.id])+' <button type="button" class="ZONE-TAG-X" onclick="event.stopPropagation();rmZone(\''+b.id+'\')">✕</button></span>';});
+  h+='</div>';
+ }
+ if(zoneActif){
+  var zb=BODY_ZONES.find(function(b){return b.id===zoneActif;});
+  if(zb){
+   h+='<div class="ZONE-PICK"><label>Lésion — '+zb.l+'</label><p class="SECT-HINT" style="margin-top:0">Quel type sur cette zone ?</p><div class="CHOICES">';
+   PLAIE_OPTS.forEach(function(p){
+    h+='<button type="button" class="CHOICE wide-btn'+(z[zoneActif]===p.id?' on':'')+'" onclick="chZoneType(\''+p.id+'\')">'+p.l+'</button>';
+   });
+   h+='</div>';
+   if(z[zoneActif])h+='<button class="BTN BTN-SML BTN-SEC" onclick="rmZone(\''+zoneActif+'\')">✕ Retirer '+zb.l+'</button>';
+   h+='</div>';
+  }
+ }
+ return h;
+}
+
+function constantesLbl(){
+ var v=B.v,p=[];
+ if(v.FC)p.push('FC '+v.FC+'/min');
+ if(v.FR)p.push('FR '+v.FR+'/min');
+ if(v.TA)p.push('TA '+v.TA+' mmHg');
+ if(v.SPO2)p.push('SpO₂ '+v.SPO2+(String(v.SPO2).indexOf('%')>=0?'':' %'));
+ if(v.GLYC)p.push('Glycémie '+v.GLYC+' g/L');
+ if(v.TEMP)p.push('Température '+v.TEMP+(String(v.TEMP).indexOf('°')>=0?'':' °C'));
+ return p.join(', ');
+}
+function constantesHtml(){
+ var h='<label>Constantes vitales (chiffres SAMU)</label><p class="SECT-HINT" style="margin-top:0">Annoncez les valeurs mesurées — laissez vide si inconnues.</p><div class="CONST-GRID">';
+ h+=inp('FC (fréquence cardiaque) — /min','FC','72',false)+inp('FR (fréquence respiratoire) — /min','FR','16',false);
+ h+=inp('TA (tension artérielle) — mmHg','TA','120/80',false)+inp('SpO₂ (saturation en oxygène) — %','SPO2','98',false);
+ h+=inp('Glycémie (sucre sanguin) — g/L','GLYC','1,0',false)+inp('Température (°C)','TEMP','36,5',false);
+ return h+'</div>';
+}
+
+function renderPanel(){
+ var p=document.getElementById('MOD-PANEL'),v=B.v,h='';
+ if(modActif==='contexte'){
+  h+='<p class="SECT-HINT">Tablette partagée : <b>saisissez le releveur à chaque bilan</b> (non mémorisé). Votre CR talkie reste individuel.</p>';
+  h+=inp('Releveur — grade, nom, prénom','RELEVEUR','EX: CPL MARTIN P-A',true);
+  h+=inp('Heure','HEURE','',true)+'<button class="BTN BTN-SML BTN-SEC" onclick="B.ctx.HEURE=heure();save();renderPanel()">⏱ Maintenant</button>';
+  h+=inp('Lieu','LIEU','Où sommes-nous ?',true);
+  h+='<label>Nombre de victimes</label><p class="SECT-HINT" style="margin-top:0">Total sur les lieux — à annoncer au SAMU.</p><div class="CHOICES">';
+  [1,2,3,4].forEach(function(n){h+='<button type="button" class="CHOICE'+(B.ctx.NB_V==n?' on':'')+'" onclick="B.ctx.NB_V='+n+';save();renderHubStatus();renderPanel()">'+n+(n===4?'+':'')+'</button>';});
+  h+='</div>';
+  h+='<label>Circonstances</label>'+choiceHtml('CIRC',CIRCS,'',true);
+  h+=area('Précision','CIRC_TXT','Ex: chute d\'une échelle…',true);
+  h+=btnSuivant();
+ }
+ if(modActif==='urgences'){
+  syncInconnueUrg();
+  h+=inconnueBar();
+  h+='<p class="SECT-HINT">Cochez ce qui est en cours — 5 urgences PSC (Premiers Secours Citoyen).</p><div class="BIG-URG">';
+  URG.forEach(function(u){h+='<div class="BU'+(v.URG[u.id]?' on':'')+'" onclick="chUrg(\''+u.id+'\')"><span class="BU-ICO">'+u.ico+'</span><div><div class="BU-TXT">'+u.t+(u.d?' ('+u.d+')':'')+'</div></div></div>';});
+  h+='</div>'+avpuHtml();
+  h+='<label>Position victime</label>'+choiceHtml('POSITION',[
+   {v:'ALLONGE',l:'Allongée sur le dos'},{v:'PLS',l:'PLS (position latérale de sécurité)'},{v:'ASSISE',l:'Assise / demi-assise'},{v:'RCP',l:'RCP / DEA (réa + défibrillateur)'}
+  ],'');
+  h+=btnSuivant();
+ }
+ if(modActif==='victime'){
+  h+=inconnueBar();
+  var off=!!B.v.INCONNUE;
+  h+=inp('Nom','NOM','',false,off)+inp('Prénom','PRENOM','',false,off)+inp('Âge','AGE',off?'Inconnu':'42 ans',false,off);
+  h+=area('Ce que dit la victime','PLAINTES',off?'Non renseignable (inconscient)':'Douleur, malaise…',false,off);
+  h+=inp('Allergies connues','ALLERG',off?'Inconnues':'',false,off);
+  h+=bodyMapHtml();
+  h+=area('Précision lésions (optionnel)','LESIONS','Ex: profondeur, objet enfoncé…',false);
+  h+=btnSuivant();
+ }
+ if(modActif==='etat'){
+  h+='<label>Respiration</label>'+choiceHtml('RESPI',['Normale','Absente','Difficile','Inconnue'],'');
+  h+=poulsHtml();
+  h+='<label>Hémorragie</label>'+choiceHtml('HEMO',['Non','Oui — active'],'red');
+  if(v.HEMO&&v.HEMO!=='Non')h+=inp('Où ?','HEMO_LOC','Bras, jambe…',false);
+  h+=constantesHtml();
+  h+=btnSuivant();
+ }
+ if(modActif==='gestes'){
+  h+='<p class="SECT-HINT">Cochez ce que l\'équipe a fait.</p><div class="CHOICES">';
+  GESTES.forEach(function(g){h+='<button type="button" class="CHOICE'+(B.GESTES.indexOf(g.id)>=0?' on':'')+'" onclick="chGest(\''+g.id+'\')">'+g.l+'</button>';});
+  h+='</div><button type="button" class="BTN BTN-SML BTN-SEC" onclick="sansGestes()"'+(B.v.SANS_GESTE?' style="opacity:.6"':'')+'>Aucun geste particulier</button>';
+  h+=btnSuivant();
+ }
+ if(modActif==='samu'){
+  buildTx();
+  pushArchive();
+  h+=talkieCtlHtml();
+  h+='<p class="SECT-HINT" style="text-align:center;font-weight:800;color:var(--ok)">⏱ Temps releveur : '+chronoFmt(chronoMs())+'</p>';
+  h+='<div class="TALKIE">'+esc(window._lastTalkie)+'</div>';
+  h+=btnSuivant();
+ }
+ p.innerHTML=h;
+}
+
+function buildTx(){
+ var v=B.v,urg=Object.keys(v.URG||{}).filter(function(k){return v.URG[k];}).map(function(k){
+  var u=URG.find(function(x){return x.id===k;});return u?u.t+(u.d?' ('+u.d+')':''):k;});
+ var id=victimeId(),age=victimeAge();
+ var talk=['SAMU, bonjour.','Transmission bilan secouriste — 4° RIISC.','Releveur : '+(B.ctx.RELEVEUR||'non renseigné')+' (CR individuel).','',
+  'Lieu : '+(B.ctx.LIEU||'?')+'.','Circonstances : '+(B.ctx.CIRC?circLbl(B.ctx.CIRC):'?')+(B.ctx.CIRC_TXT?' — '+B.ctx.CIRC_TXT:'')+'.',
+  'Nombre de victimes : '+(B.ctx.NB_V||1)+'.',
+  'Victime principale (détail) : '+id+(age?', '+age:'')+'.'];
+ if(urg.length)talk.push('Urgences en cours : '+urg.join(', ')+'.');
+ talk.push('Conscience AVPU : '+avpuLbl(v.AVPU)+'.','Respiration : '+(v.RESPI||'?')+'.','Pouls : '+poulsLbl()+'.');
+ var cst=constantesLbl();
+ if(cst)talk.push('Constantes : '+cst+'.');
+ if(v.HEMO==='Oui — active')talk.push('Hémorragie : '+ (v.HEMO_LOC||'localisation à préciser')+'.');
+ if(v.PLAINTES)talk.push('Plaintes : '+v.PLAINTES+'.');
+ var zones=bodyZonesLbl();
+ if(zones)talk.push('Lésions par zone : '+zones+'.');
+ if(v.LESIONS)talk.push('Précision lésions : '+v.LESIONS+'.');
+ if(B.GESTES.length)talk.push('Gestes faits : '+B.GESTES.map(gesteLbl).join(', ')+'.');
+ else if(B.v.SANS_GESTE)talk.push('Gestes faits : aucun geste particulier signalé.');
+ talk.push('Position : '+posLbl(v.POSITION)+'.','','Demande de consigne. Fin de transmission.');
+ window._lastTalkie=talk.join('\n');
+}
+function talkieEnabled(){return localStorage.getItem(TALKIE_KEY)!=='0';}
+function setTalkieSound(on){localStorage.setItem(TALKIE_KEY,on?'1':'0');if(modActif==='samu')renderPanel();}
+function talkieCtlHtml(){
+ var on=talkieEnabled();
+ return '<div class="TALKIE-CTL"><button type="button" class="BTN BTN-SML '+(on?'BTN-BLU':'BTN-SEC')+'" onclick="setTalkieSound('+(!on)+')">'+(on?'🔊 Talkie + voix : ON':'🔇 Talkie + voix : OFF')+'</button><button type="button" class="BTN BTN-SML BTN-SEC" onclick="playTalkieFx()">📻 Réécouter l\'appel</button></div>';
+}
+function initTalkieVoices(){
+ if(!window.speechSynthesis)return;
+ window.speechSynthesis.getVoices();
+ window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
+}
+function frVoices(){
+ return window.speechSynthesis.getVoices().filter(function(x){
+  return x.lang==='fr-FR'||(x.lang&&x.lang.indexOf('fr')===0);
+ });
+}
+function isMaleVoice(v){
+ var n=(v.name||'').toLowerCase();
+ if(/female|femme|woman|girl|julie|hortense|amelie|amélie|caroline|virginie|denise|claire|marie|zira|hedvig|anna|elodie|élodie/i.test(n))return false;
+ if(/male|homme|man\b|paul|henri|thomas|damien|nicolas|marcel|claude|guillaume|pierre|jacques|yves|serge|michel|daniel/i.test(n))return true;
+ return null;
+}
+function getTalkieVoice(){
+ var fr=frVoices();
+ if(!fr.length)return null;
+ var male=fr.filter(function(v){return isMaleVoice(v)===true;});
+ if(male.length)return male[0];
+ var notFemale=fr.filter(function(v){return isMaleVoice(v)!==false;});
+ return notFemale[0]||fr[0];
+}
+function speakTalkie(){
+ if(!talkieEnabled()||!window.speechSynthesis)return;
+ window.speechSynthesis.cancel();
+ var u=new SpeechSynthesisUtterance(TALKIE_MSG);
+ u.lang='fr-FR';u.rate=0.84;u.pitch=0.62;u.volume=1;
+ var voice=getTalkieVoice();
+ if(voice)u.voice=voice;
+ window.speechSynthesis.speak(u);
+}
+function getTalkieCtx(){
+ try{
+  if(!talkieCtx)talkieCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(talkieCtx.state==='suspended')talkieCtx.resume();
+  return talkieCtx;
+ }catch(e){return null;}
+}
+function stopTalkieNoise(cancelSpeech){
+ if(cancelSpeech!==false){try{window.speechSynthesis.cancel();}catch(e){}}
+ talkieNodes.forEach(function(n){try{if(n.stop)n.stop(0);n.disconnect();}catch(e){}});
+ talkieNodes=[];
+}
+function playTalkieFx(){
+ if(!talkieEnabled())return;
+ var ctx=getTalkieCtx();if(!ctx)return;
+ stopTalkieNoise();
+ try{
+  var t=ctx.currentTime,out=ctx.createGain();
+  out.gain.value=0.88;
+  out.connect(ctx.destination);
+  talkieNodes.push(out);
+  function hiss(start,len,peak,lo,hi){
+   var sr=ctx.sampleRate,n=Math.floor(sr*len),buf=ctx.createBuffer(1,n,sr),d=buf.getChannelData(0),b=0,i;
+   for(i=0;i<n;i++){b=b*0.95+(Math.random()*2-1)*0.055;d[i]=b;}
+   var src=ctx.createBufferSource();src.buffer=buf;
+   var hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=lo;
+   var lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=hi;
+   var g=ctx.createGain();
+   g.gain.setValueAtTime(0.0001,start);
+   g.gain.linearRampToValueAtTime(peak,start+0.02);
+   g.gain.setValueAtTime(peak*0.85,start+len*0.35);
+   g.gain.exponentialRampToValueAtTime(0.0001,start+len);
+   src.connect(hp);hp.connect(lp);lp.connect(g);g.connect(out);
+   src.start(start);src.stop(start+len+0.02);
+   talkieNodes.push(src,hp,lp,g);
+  }
+  function click(start){
+   var o=ctx.createOscillator(),g=ctx.createGain();
+   o.type='triangle';o.frequency.setValueAtTime(180,start);
+   o.frequency.exponentialRampToValueAtTime(90,start+0.04);
+   g.gain.setValueAtTime(0.0001,start);
+   g.gain.linearRampToValueAtTime(0.14,start+0.004);
+   g.gain.exponentialRampToValueAtTime(0.0001,start+0.045);
+   o.connect(g);g.connect(out);
+   o.start(start);o.stop(start+0.05);
+   talkieNodes.push(o,g);
+  }
+  click(t);
+  hiss(t+0.015,0.28,0.14,450,3200);
+  setTimeout(function(){stopTalkieNoise(false);},420);
+  setTimeout(speakTalkie,300);
+ }catch(e){speakTalkie();}
+}
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('sec_theme',document.body.classList.contains('dark')?'d':'l');}
+var deferredInstall=null;
+function isStandaloneApp(){
+ return window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: fullscreen)').matches||navigator.standalone===true;
+}
+function isIosDevice(){
+ return /iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+}
+function isAndroidDevice(){
+ return /Android/i.test(navigator.userAgent);
+}
+function isMobileDevice(){
+ return isIosDevice()||isAndroidDevice()||/Mobile/i.test(navigator.userAgent);
+}
+function masquerInstallUi(persist){
+ var b=document.getElementById('INSTALL-BANNER'),p0=document.getElementById('BTN-INSTALL-P0'),w=document.getElementById('INSTALL-WARN');
+ if(b)b.classList.add('HIDDEN');
+ if(p0)p0.classList.add('HIDDEN');
+ if(w)w.classList.add('HIDDEN');
+ if(persist)try{localStorage.setItem('sec_install_dismiss','1');}catch(e){}
+}
+function majAvertissementInstall(){
+ var w=document.getElementById('INSTALL-WARN');
+ if(!w||isStandaloneApp())return;
+ if(window.isSecureContext){
+  w.classList.add('HIDDEN');
+  return;
+ }
+ w.innerHTML='<b>Installation sur téléphone :</b> l\'adresse actuelle (<b>http://</b>) ne permet pas d\'installer l\'app. Sur le PC, ouvrez la fenêtre du serveur et tapez sur le téléphone l\'adresse <b>https://…:8443/formation-secouriste/</b> (même Wi‑Fi). Acceptez l\'avertissement de sécurité une fois.';
+ w.classList.remove('HIDDEN');
+ try{localStorage.removeItem('sec_install_dismiss');}catch(x){}
+}
+function afficherInstallUi(){
+ if(isStandaloneApp()){masquerInstallUi(false);return;}
+ majAvertissementInstall();
+ if(localStorage.getItem('sec_install_dismiss')==='1'&&!window.isSecureContext){masquerInstallUi(false);return;}
+ if(localStorage.getItem('sec_install_dismiss')==='1'&&window.isSecureContext&&!deferredInstall&&!isMobileDevice()){masquerInstallUi(false);return;}
+ var b=document.getElementById('INSTALL-BANNER'),p0=document.getElementById('BTN-INSTALL-P0');
+ if(p0&&(isMobileDevice()||deferredInstall||!window.isSecureContext))p0.classList.remove('HIDDEN');
+ if(b&&(deferredInstall||(isMobileDevice()&&window.isSecureContext)))b.classList.remove('HIDDEN');
+}
+function fermerModaleInstall(){
+ var o=document.getElementById('INSTALL-OVERLAY');
+ if(o)o.classList.add('HIDDEN');
+}
+function ouvrirModaleInstall(){
+ var body=document.getElementById('INSTALL-MODAL-BODY'),o=document.getElementById('INSTALL-OVERLAY');
+ if(!body||!o)return;
+ var html='';
+ if(!window.isSecureContext){
+  html+='<div class="warn"><b>Adresse non sécurisée.</b> Pour installer l\'app, ouvrez sur le téléphone l\'adresse <b>HTTPS</b> affichée dans la fenêtre du serveur sur votre PC (port <b>8443</b>), pas celle en http://8080.</div>';
+  html+='<div class="url">https://[IP-du-PC]:8443/formation-secouriste/</div>';
+ }
+ if(isIosDevice()){
+  html+='<ol><li>Ouvrez cette page dans <b>Safari</b> (pas Chrome).</li><li>Touchez <b>Partager</b> (icône carré avec flèche vers le haut).</li><li>Choisissez <b>Sur l\'écran d\'accueil</b>.</li><li>Touchez <b>Ajouter</b>.</li></ol>';
+  html+='<div class="warn">Sur iPhone, le bouton « Installer » ne lance pas une fenêtre automatique : c\'est normal, suivez les étapes ci-dessus.</div>';
+ }else if(isAndroidDevice()){
+  if(window.isSecureContext){
+   html+='<div class="warn"><b>Raccourci Chrome ?</b> Si l\'icône sur l\'écran d\'accueil est le logo Chrome et la barre du navigateur reste en bas, ce n\'est <b>pas</b> l\'app complète — seulement un favori.</div>';
+   html+='<ol><li>Acceptez l\'avertissement de sécurité HTTPS (certificat local) au premier chargement.</li><li>Rechargez la page une fois (tirez vers le bas ou menu → Actualiser).</li><li>Menu <b>⋮</b> → cherchez <b>Installer l\'application</b> (pas seulement « Ajouter à l\'écran d\'accueil »).</li><li>Confirmez : l\'icône doit être le <b>blason Phoenix</b>, pas Chrome.</li></ol>';
+  }else{
+   html+='<div class="warn">Passez d\'abord en HTTPS (voir ci-dessus), puis utilisez le menu Chrome.</div>';
+  }
+ }else{
+  html+='<ol><li>Menu du navigateur <b>⋮</b> ou <b>⋯</b>.</li><li><b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</li></ol>';
+ }
+ body.innerHTML=html;
+ o.classList.remove('HIDDEN');
+}
+function proposerInstall(){
+ if(deferredInstall){
+  deferredInstall.prompt();
+  deferredInstall.userChoice.then(function(r){
+   deferredInstall=null;
+   if(r.outcome==='accepted')masquerInstallUi(true);
+   else afficherInstallUi();
+  });
+  return;
+ }
+ ouvrirModaleInstall();
+}
+window.addEventListener('beforeinstallprompt',function(e){
+ e.preventDefault();
+ deferredInstall=e;
+ try{localStorage.removeItem('sec_install_dismiss');}catch(x){}
+ afficherInstallUi();
+});
+window.addEventListener('appinstalled',function(){masquerInstallUi(true);deferredInstall=null;});
+window.onload=function(){
+ try{localStorage.removeItem('secourisme_profil');}catch(e){}
+ initTalkieVoices();
+ if(localStorage.getItem('sec_theme')==='d')document.body.classList.add('dark');
+ demarrerApp();
+ afficherInstallUi();
+ if('serviceWorker' in navigator){
+  if(window.isSecureContext){
+   navigator.serviceWorker.register('/formation-secouriste/sw.js',{scope:'/formation-secouriste/'}).then(function(reg){
+    console.log('PWA Secourisme:',reg.scope);
+    return reg.update();
+   }).catch(function(e){console.warn('SW:',e);});
+  }else{
+   console.warn('Service Worker désactivé : utilisez HTTPS (port 8443) pour installer sur téléphone.');
+  }
+ }
+};
+</script>
+</body>
+</html>
