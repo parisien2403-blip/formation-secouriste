@@ -112,8 +112,19 @@ textarea{min-height:70px;resize:vertical;font-family:inherit}
 .INSTALL-BTN{background:#fff;color:var(--red-d);border:none;border-radius:10px;padding:10px 14px;font-weight:800;font-size:.72em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
 .INSTALL-DIS{background:transparent;color:rgba(255,255,255,.75);border:none;font-size:.65em;font-weight:700;cursor:pointer;text-decoration:underline;padding:2px 4px}
 @keyframes installSlide{from{transform:translateY(120%);opacity:0}to{transform:translateY(0);opacity:1}}
-@media (display-mode:standalone),(display-mode:fullscreen){.INSTALL-BANNER{display:none!important}}
+@media (display-mode:standalone),(display-mode:fullscreen){.INSTALL-BANNER,#P0 .BTN-INSTALL,#INSTALL-WARN{display:none!important}}
 #P0 .BTN-INSTALL{background:rgba(255,255,255,.2);color:#fff;border:2px solid rgba(255,255,255,.45);max-width:280px;margin-top:14px}
+#INSTALL-WARN{max-width:320px;margin-top:10px;padding:12px 14px;background:rgba(255,193,7,.18);border:2px solid rgba(255,235,59,.55);border-radius:12px;font-size:.74em;line-height:1.45;text-align:left;color:#fff}
+#INSTALL-WARN b{color:#FFEB3B}
+.INSTALL-OVERLAY{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + var(--safe-top));padding-bottom:calc(16px + var(--safe-bottom))}
+.INSTALL-OVERLAY.HIDDEN{display:none!important}
+.INSTALL-MODAL{background:linear-gradient(160deg,#fff,#f5f5f5);color:#1a1a1a;border-radius:18px;max-width:360px;width:100%;padding:22px 18px 18px;box-shadow:0 12px 40px rgba(0,0,0,.45);max-height:85dvh;overflow-y:auto}
+.INSTALL-MODAL h2{margin:0 0 12px;font-size:1.05em;text-transform:uppercase;color:var(--red-d)}
+.INSTALL-MODAL ol{margin:0 0 14px;padding-left:1.2em;font-size:.86em;line-height:1.55}
+.INSTALL-MODAL li{margin-bottom:8px}
+.INSTALL-MODAL .warn{background:#FFF3E0;border:2px solid #FFB74D;border-radius:10px;padding:10px 12px;font-size:.78em;line-height:1.45;margin-bottom:14px}
+.INSTALL-MODAL .url{background:#263238;color:#69F0AE;border-radius:8px;padding:10px 12px;font-size:.72em;word-break:break-all;margin-bottom:14px;font-family:ui-monospace,monospace;line-height:1.45}
+.INSTALL-MODAL .BTN{margin-top:0}
 .CHRONO.done{background:var(--ok);border-color:#fff}
 body.dark .CHRONO{background:#0d47a1}
 body.dark .CHRONO.done{background:#1B5E20}
@@ -154,6 +165,7 @@ body.dark .BIB-META{color:#aaa}
 <button id="BTN-RES" class="BTN BTN-BLU HIDDEN" style="max-width:280px;margin-top:10px" onclick="ouvrirHub()">↩ REPRENDRE</button>
 <button class="BTN BTN-SEC" style="max-width:280px;margin-top:10px" onclick="ouvrirBib()">📚 Bibliothèque CR talkie <span id="BIB-COUNT-P0"></span></button>
 <button id="BTN-INSTALL-P0" class="BTN BTN-INSTALL HIDDEN" onclick="proposerInstall()">📲 Installer l'application</button>
+<div id="INSTALL-WARN" class="HIDDEN"></div>
 </div>
 
 <div id="P-RESUME" class="SCREEN HIDDEN">
@@ -207,6 +219,14 @@ body.dark .BIB-META{color:#aaa}
 <div class="INSTALL-BANNER-ACT">
 <button class="INSTALL-BTN" type="button" onclick="proposerInstall()">Installer</button>
 <button class="INSTALL-DIS" type="button" onclick="masquerInstallUi(true)">Plus tard</button>
+</div>
+</div>
+
+<div id="INSTALL-OVERLAY" class="INSTALL-OVERLAY HIDDEN" onclick="if(event.target===this)fermerModaleInstall()">
+<div class="INSTALL-MODAL">
+<h2>📲 Installer sur l'écran d'accueil</h2>
+<div id="INSTALL-MODAL-BODY"></div>
+<button class="BTN BTN-BLU" type="button" onclick="fermerModaleInstall()">Compris</button>
 </div>
 </div>
 
@@ -825,34 +845,77 @@ function isStandaloneApp(){
 function isIosDevice(){
  return /iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
 }
+function isAndroidDevice(){
+ return /Android/i.test(navigator.userAgent);
+}
+function isMobileDevice(){
+ return isIosDevice()||isAndroidDevice()||/Mobile/i.test(navigator.userAgent);
+}
 function masquerInstallUi(persist){
- var b=document.getElementById('INSTALL-BANNER'),p0=document.getElementById('BTN-INSTALL-P0');
+ var b=document.getElementById('INSTALL-BANNER'),p0=document.getElementById('BTN-INSTALL-P0'),w=document.getElementById('INSTALL-WARN');
  if(b)b.classList.add('HIDDEN');
  if(p0)p0.classList.add('HIDDEN');
+ if(w)w.classList.add('HIDDEN');
  if(persist)try{localStorage.setItem('sec_install_dismiss','1');}catch(e){}
+}
+function majAvertissementInstall(){
+ var w=document.getElementById('INSTALL-WARN');
+ if(!w||isStandaloneApp())return;
+ if(window.isSecureContext){
+  w.classList.add('HIDDEN');
+  return;
+ }
+ w.innerHTML='<b>Installation sur téléphone :</b> l\'adresse actuelle (<b>http://</b>) ne permet pas d\'installer l\'app. Sur le PC, ouvrez la fenêtre du serveur et tapez sur le téléphone l\'adresse <b>https://…:8443/formation-secouriste/</b> (même Wi‑Fi). Acceptez l\'avertissement de sécurité une fois.';
+ w.classList.remove('HIDDEN');
+ try{localStorage.removeItem('sec_install_dismiss');}catch(x){}
 }
 function afficherInstallUi(){
  if(isStandaloneApp()){masquerInstallUi(false);return;}
- if(localStorage.getItem('sec_install_dismiss')==='1'){masquerInstallUi(false);return;}
+ majAvertissementInstall();
+ if(localStorage.getItem('sec_install_dismiss')==='1'&&!window.isSecureContext){masquerInstallUi(false);return;}
+ if(localStorage.getItem('sec_install_dismiss')==='1'&&window.isSecureContext&&!deferredInstall&&!isMobileDevice()){masquerInstallUi(false);return;}
  var b=document.getElementById('INSTALL-BANNER'),p0=document.getElementById('BTN-INSTALL-P0');
- if(p0)p0.classList.remove('HIDDEN');
- if(deferredInstall||isIosDevice()){if(b)b.classList.remove('HIDDEN');}
+ if(p0&&(isMobileDevice()||deferredInstall||!window.isSecureContext))p0.classList.remove('HIDDEN');
+ if(b&&(deferredInstall||(isMobileDevice()&&window.isSecureContext)))b.classList.remove('HIDDEN');
+}
+function fermerModaleInstall(){
+ var o=document.getElementById('INSTALL-OVERLAY');
+ if(o)o.classList.add('HIDDEN');
+}
+function ouvrirModaleInstall(){
+ var body=document.getElementById('INSTALL-MODAL-BODY'),o=document.getElementById('INSTALL-OVERLAY');
+ if(!body||!o)return;
+ var html='';
+ if(!window.isSecureContext){
+  html+='<div class="warn"><b>Adresse non sécurisée.</b> Pour installer l\'app, ouvrez sur le téléphone l\'adresse <b>HTTPS</b> affichée dans la fenêtre du serveur sur votre PC (port <b>8443</b>), pas celle en http://8080.</div>';
+  html+='<div class="url">https://[IP-du-PC]:8443/formation-secouriste/</div>';
+ }
+ if(isIosDevice()){
+  html+='<ol><li>Ouvrez cette page dans <b>Safari</b> (pas Chrome).</li><li>Touchez <b>Partager</b> (icône carré avec flèche vers le haut).</li><li>Choisissez <b>Sur l\'écran d\'accueil</b>.</li><li>Touchez <b>Ajouter</b>.</li></ol>';
+  html+='<div class="warn">Sur iPhone, le bouton « Installer » ne lance pas une fenêtre automatique : c\'est normal, suivez les étapes ci-dessus.</div>';
+ }else if(isAndroidDevice()){
+  if(window.isSecureContext){
+   html+='<ol><li>Touchez le menu <b>⋮</b> (trois points) en haut à droite de Chrome.</li><li>Choisissez <b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</li><li>Confirmez.</li></ol>';
+  }else{
+   html+='<div class="warn">Passez d\'abord en HTTPS (voir ci-dessus), puis utilisez le menu Chrome.</div>';
+  }
+ }else{
+  html+='<ol><li>Menu du navigateur <b>⋮</b> ou <b>⋯</b>.</li><li><b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</li></ol>';
+ }
+ body.innerHTML=html;
+ o.classList.remove('HIDDEN');
 }
 function proposerInstall(){
- masquerInstallUi(true);
  if(deferredInstall){
   deferredInstall.prompt();
   deferredInstall.userChoice.then(function(r){
    deferredInstall=null;
-   if(r.outcome!=='accepted')try{localStorage.removeItem('sec_install_dismiss');}catch(x){}
+   if(r.outcome==='accepted')masquerInstallUi(true);
+   else afficherInstallUi();
   });
   return;
  }
- if(isIosDevice()){
-  alert('Sur iPhone / iPad :\n1. Touchez Partager (icône carré avec flèche)\n2. « Sur l\'écran d\'accueil »\n3. Ajouter\n\nL\'app s\'ouvrira en plein écran.');
-  return;
- }
- alert('Pour installer : menu du navigateur (⋮ ou ⋯) → « Installer l\'application » ou « Ajouter à l\'écran d\'accueil ».');
+ ouvrirModaleInstall();
 }
 window.addEventListener('beforeinstallprompt',function(e){
  e.preventDefault();
@@ -868,7 +931,11 @@ window.onload=function(){
  demarrerApp();
  afficherInstallUi();
  if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(function(){console.log('PWA Secourisme prête');}).catch(function(e){console.warn('SW:',e);});
+  if(window.isSecureContext){
+   navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(function(){console.log('PWA Secourisme prête');}).catch(function(e){console.warn('SW:',e);});
+  }else{
+   console.warn('Service Worker désactivé : utilisez HTTPS (port 8443) pour installer sur téléphone.');
+  }
  }
 };
 </script>
