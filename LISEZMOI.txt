@@ -1,0 +1,52 @@
+FORMATION SECOURISTE — DOSSIER A PUBLIER SEUL
+==============================================
+
+Ce dossier est INDEPENDANT de Suivi Mission.
+Tu peux tout mettre dans un depot GitHub separe.
+
+ETAPE 1 — Sur GitHub
+--------------------
+1. Va sur github.com / parisien2403-blip
+2. New repository
+3. Nom du depot : formation-secouriste
+4. Public > Create
+
+ETAPE 2 — Envoyer les fichiers
+-------------------------------
+1. Ouvre le nouveau depot formation-secouriste
+2. Upload files (ou glisser-deposer)
+3. Mets TOUS les fichiers de CE dossier a la RACINE :
+   - index.html
+   - manifest.json
+   - sw.js
+   - logo.jpg
+   - phonix.png
+   - icon-512.png
+   (1780441905134.png = optionnel, pour garder l image source)
+
+4. Commit
+
+ETAPE 3 — Activer le site
+-------------------------
+Settings > Pages > Source : main branch > Save
+Attends 5 a 10 minutes.
+
+ETAPE 4 — Adresse sur le telephone
+----------------------------------
+https://parisien2403-blip.github.io/formation-secouriste/
+
+(Ce n'est PAS suivi-mission/formation-secouriste)
+
+ETAPE 5 — Installer sur le telephone
+------------------------------------
+1. Supprime les anciennes icones (Suivi et ancien raccourci Secourisme)
+2. Ouvre l adresse ci-dessus
+3. Android : menu ... > Installer l application
+   iPhone : Safari > Partager > Sur l ecran d accueil
+
+Tu auras 2 apps separees :
+- Suivi Mission  (autre adresse)
+- Secourisme     (celle-ci)
+
+Sur ton PC pour tester en local (optionnel) :
+Copie ce dossier, lance LANCER.bat si present, ou ouvre index.html via un serveur.
