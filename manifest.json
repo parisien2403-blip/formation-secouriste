@@ -1,0 +1,16 @@
+{
+  "id": "bilan-secouriste-riisc",
+  "name": "Bilan Secouriste 4° RIISC",
+  "short_name": "Secourisme",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#7f0000",
+  "theme_color": "#B71C1C",
+  "icons": [
+    {
+      "src": "logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    }
+  ]
+}
