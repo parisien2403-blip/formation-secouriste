@@ -1,1 +1,9 @@
 plugins: []
+include:
+  - manifest.json
+  - manifest.webmanifest
+  - sw.js
+  - logo.jpg
+  - phonix.png
+  - icon-512.png
+  - index.html
